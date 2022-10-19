@@ -1,0 +1,20 @@
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 5000;
+const dotenv = require('dotenv');
+dotenv.config();
+require('./Passport/Bearer')
+require('./Connect/Connect');
+app.use(morgan('combined'));
+app.use(cors());
+app.use(bodyParser.json());
+const userRouter = require('./Routes/User_Route');
+const productRouter = require('./Routes/Product_Route');
+// const commandeRouter = require('./Routes/Commande_Route');
+app.use(userRouter);
+app.use(productRouter);
+// app.use(commandeRouter);
+app.listen(port, function () { console.log(`Server is listening on port ${port}`) });
